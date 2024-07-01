@@ -2,12 +2,20 @@
 
 Building an intuition for the cost of locks by benchmarking spin locks vs mutex locks. 
 
-## Benchmarking 
+## Benchmarking
 
-Benchmarking is done with [Criterion](https://github.com/bheisler/criterion.rs). 
+Benchmarking is done with [Criterion](https://github.com/bheisler/criterion.rs).  
 
 ```console 
-cargo bench
+cargo clean && cargo bench --color always
+```
+
+## CPU Profiling
+
+CPU profiling is done with [pprof-rs](https://github.com/tikv/pprof-rs).
+
+```console 
+cargo clean && sudo cargo bench --color always --bench benchmark -- --profile-time=5
 ```
 
 ## Credits 
