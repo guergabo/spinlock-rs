@@ -1,0 +1,23 @@
+[package]
+name = "spinlock-rs"
+version = "0.1.0"
+authors = [
+    "Gabriel Guerra <gguergabo@gmail.com>", 
+]
+license = "MIT" 
+repository = "https://github.com/guergabo/spinlock-rs.git"
+description = "Building an intuition for spin locks"
+rust-version = "1.78.0"
+
+[dependencies]
+
+[dev-dependencies]
+criterion = { version = "0.4", features = ["html_reports"] }
+
+# The `[[bench]]` section tells Cargo about your benchmark, and `harness = false`
+# indicates that you're using Criterion instead of the built-in benchmark harness. 
+# Run: `cargo bench`. 
+[[bench]]
+name = "benchmark"
+harness = false
+
