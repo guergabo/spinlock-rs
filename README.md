@@ -1,6 +1,14 @@
 # spinlock-rs
 
-Building intuition for the cost of locks by benchmarking spin locks vs mutex locks. 
+Building an intuition for the cost of locks by benchmarking spin locks vs mutex locks. 
+
+## Benchmarking 
+
+Benchmarking is done with [Criterion](https://github.com/bheisler/criterion.rs). 
+
+```console 
+cargo bench
+```
 
 ## Credits 
 

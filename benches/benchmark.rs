@@ -1,5 +1,4 @@
 extern crate criterion; 
-
 use criterion::{criterion_group, criterion_main, Criterion};
 
 extern crate spinlock_rs; 
@@ -22,7 +21,7 @@ fn spin_lock_unlock_with_contention_benchmark(c: &mut Criterion) {
     let spin = SpinLock::new(0);
     std::thread::scope(|s| {
         s.spawn(|| {
-            for _ in 0..1000 {
+            for _ in 0..10_000 {
                 let mut val = spin.lock(); 
                 *val += 1; 
             }
@@ -56,7 +55,7 @@ fn mutex_lock_unlock_with_contention_benchmark(c: &mut Criterion) {
     let mutex = Mutex::new(0); 
     std::thread::scope(|s| {
         s.spawn(|| {
-           for _ in 0..1000 {
+           for _ in 0..10_000 {
             let mut val = mutex.lock().unwrap(); 
             *val += 1; 
            } 
