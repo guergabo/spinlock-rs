@@ -64,7 +64,7 @@ fn mutex_lock_unlock_with_contention_and_long_critical_section_benchmark(c: &mut
 
 criterion_group!(
     name = mutex;  
-    config = Criterion::default().sample_size(10); 
+    config = Criterion::default(); 
     targets = mutex_lock_unlock_no_contention_benchmark, 
         mutex_lock_unlock_with_contention_benchmark, 
         mutex_lock_unlock_with_contention_and_long_critical_section_benchmark  
