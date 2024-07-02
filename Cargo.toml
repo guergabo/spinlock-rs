@@ -12,13 +12,16 @@ rust-version = "1.78.0"
 [dependencies]
 
 [dev-dependencies]
-criterion = { version = "0.5", features = ["html_reports"] }
-pprof = { version = "0.13", features = ["criterion", "flamegraph"] }
+criterion = { version = "0.5.1", features = ["html_reports"] }
+pprof = { version = "0.13.0", features = ["criterion", "flamegraph"] }
 
-# The `[[bench]]` section tells Cargo about your benchmark, and `harness = false`
-# indicates that you're using Criterion instead of the built-in benchmark harness. 
-# Run: `cargo bench`. 
 [[bench]]
-name = "benchmark"
+name = "spinlock"
+path = "benches/spinlock.rs"
+harness = false
+
+[[bench]]
+name = "mutex"
+path = "benches/mutex.rs"
 harness = false
 

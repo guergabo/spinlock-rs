@@ -63,69 +63,13 @@ fn spin_lock_unlock_with_contention_and_long_critical_section_benchmark(c: &mut 
     }); 
 }
 
-// Mutex benchmarks 
-
-use std::sync::Mutex; 
-
-fn mutex_lock_unlock_no_contention_benchmark(c: &mut Criterion) {
-    let mutex = Mutex::new(0); 
-    c.bench_function(
-        "mutex_lock_unlock_no_contention", 
-        |b| b.iter(|| {
-            let mut val = mutex.lock().unwrap(); 
-            *val += 1; 
-        }),
-    );
-}
-
-fn mutex_lock_unlock_with_contention_benchmark(c: &mut Criterion) {
-    let mutex = Mutex::new(0); 
-    std::thread::scope(|s| {
-        s.spawn(|| {
-           for _ in 0..1000 {
-            let mut val = mutex.lock().unwrap(); 
-            *val += 1; 
-           } 
-        }); 
-        c.bench_function(
-            "mutex_lock_unlock_with_contention", 
-            |b| b.iter(|| {
-                let mut val = mutex.lock().unwrap(); 
-                *val += 1; 
-            }),
-        );
-    }); 
-}
-
-fn mutex_lock_unlock_with_contention_and_long_critical_section_benchmark(c: &mut Criterion) {
-    let mutex = Mutex::new(0); 
-    std::thread::scope(|s| {
-        s.spawn(|| {
-           for _ in 0..1000 {
-            let mut val = mutex.lock().unwrap(); 
-            *val += 1; 
-            sleep(Duration::from_micros(100)); // Simulate long critical section 
-           } 
-        }); 
-        c.bench_function(
-            "mutex_lock_unlock_with_contention_and_long_critical_section", 
-            |b| b.iter(|| {
-                let mut val = mutex.lock().unwrap(); 
-                *val += 1; 
-                sleep(Duration::from_micros(100)); // Simulate long critical section 
-            }),
-        );
-    }); 
-}
 
 criterion_group!(
-    name = benches;  
+    name = spinlock; 
     config = Criterion::default().with_profiler(PProfProfiler::new(100, Output::Flamegraph(None)));
-    targets = // spin_lock_unlock_with_no_contention_benchmark, 
-        // mutex_lock_unlock_no_contention_benchmark, 
+    targets = spin_lock_unlock_with_no_contention_benchmark, 
         spin_lock_unlock_with_contention_benchmark, 
-        // mutex_lock_unlock_with_contention_benchmark, // why no work? 
-        spin_lock_unlock_with_contention_and_long_critical_section_benchmark,
-        // mutex_lock_unlock_with_contention_and_long_critical_section_benchmark  
+        spin_lock_unlock_with_contention_and_long_critical_section_benchmark, 
 ); 
-criterion_main!(benches); 
+
+criterion_main!(spinlock); 
